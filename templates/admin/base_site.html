@@ -1,9 +1,14 @@
 {% extends "admin/base.html" %}
+{% load i18n admin_reorder %}
 
-{% block title %}{{ title }} | Polls site admin{% endblock %}
+{% block title %}{{ title }} | {% trans 'Polls site admin' %}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Polls administration</a></h1>
+{% admin_reorder %}
+<h1 id="site-name">{% trans 'Polls administration' %}</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
+
+
+

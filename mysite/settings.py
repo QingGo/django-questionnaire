@@ -64,6 +64,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+            'admin_reorder': 'polls.templatetags.admin_reorder',
+            }
         },
     },
 ]
@@ -123,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ADMIN_REORDER = (
+    ('polls', ('Questionnaire', 'Question', 'Choice')),
+)
