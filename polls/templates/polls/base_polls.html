@@ -5,28 +5,41 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}" />
+    
 </head>
 {% endblock %}
+
+{% block board %}
+<div class="container">
+  <h1 class="text-primary">Polls App by Django</h1>
+</div>
+{% endblock %}
+
+{% block navigator %}
+<div class="container" style="background-color: rgba(11, 214, 45, 0.555);">
+        <ul class="nav nav-pills">
+          <li class="nav-item" "active">
+            <a class="nav-link" href={% url 'polls:index' %}>All questionnaires</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href={% url 'polls:index' %}>Results</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href={% url 'admin:index' %}>Admin page</a>
+          </li>
+        </ul>
+</div>
+{% endblock %}
+
 <div class="container">
     {% block bodyindiv %}
-    <h1>Questionnaires list </h1>
-    {% if latest_questionnaire_list %}
-        <ul>
-            {% for questionnaire in latest_questionnaire_list %}
-                <li><a href="{% url 'polls:detail' questionnaire.id %}">{{ questionnaire.questionnaire_name }}</a>
-                    <ul>
-                        {% for question in questionnaire.question_set.all %}
-                            <li> {{ question.question_text }}</li>
-                        {% endfor %}
-                    </ul>
-                    <p class="text-muted">Questionnaire detail: {{ questionnaire.detail_info }}</p>
-                    <small class="text-muted">Publish Date: {{ questionnaire.pub_date }}</small>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
     {% endblock %}
-    </div>
+</div>
+
+{% block footer %}
+<div class="container" align="center">
+    Power by <strong><a href="https://github.com/QingGo">QingGo</a></strong> 
+    | <strong><a href="https://github.com/QingGo/django-questionnaire">Github</a></strong> 
+</div>
+{% endblock %}
 </html>

@@ -1,16 +1,18 @@
 {% extends "polls/base_polls.html" %}
 
 {% block bodyindiv %}
-<h1>Questionnaires list </h1>
+<h2>Questionnaires list</h2>
 {% if latest_questionnaire_list %}
     <ul>
         {% for questionnaire in latest_questionnaire_list %}
-            <li><a href="{% url 'polls:detail' questionnaire.id %}">{{ questionnaire.questionnaire_name }}</a>
+            <li><h4><a href="{% url 'polls:detail' questionnaire.id %}">{{ questionnaire.questionnaire_name }}</h4></a>
                 <ul>
-                    {% for question in questionnaire.question_set.all %}
+                    {% for question in questionnaire.question_set.all|slice:":2" %}
                         <li> {{ question.question_text }}</li>
                     {% endfor %}
                 </ul>
+                <p>...</p>
+                </br>
                 <p class="text-muted">Questionnaire detail: {{ questionnaire.detail_info }}</p>
                 <small class="text-muted">Publish Date: {{ questionnaire.pub_date }}</small>
             </li>

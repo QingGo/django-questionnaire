@@ -1,8 +1,10 @@
 {% extends "polls/base_polls.html" %}
 
 {% block bodyindiv %}
-<h1>{{ questionnaire.questionnaire_name }}</h1>
-
+<h2>{{ questionnaire.questionnaire_name }}</h2>
+<p class="text-muted">Questionnaire detail: {{ questionnaire.detail_info }}</p>
+<small class="text-muted">Publish Date: {{ questionnaire.pub_date }}</small>
+<br></br>
 <ul>
     {% for question in questionnaire.question_set.all %}
         <li>
