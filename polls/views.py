@@ -13,6 +13,8 @@ from django.utils import timezone
 
 from collections import OrderedDict
 
+from pyecharts import Bar
+
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -20,6 +22,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+
 
 class DetailView(generic.DetailView):
     model = Questionnaire
@@ -29,9 +32,27 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
     '''
 
+def results(request, questionnaire_id):
+    questionnaire = get_object_or_404(Questionnaire, pk=questionnaire_id)
+    x = []
+    y = []
+    for question in questionnaire.question_set.all():
+        for choice in question.choice_set.all():
+            x.append(choice.choice_text)
+            y.append(choice.votes)
+    bar=Bar("投票结果总览",width=1000,height=700)
+    bar.add("各选项投票量",x, y, mark_line=["average"], mark_point=["max", "min"])
+
+    return render(request, 'polls/results.html', {
+            'questionnaire': questionnaire,
+            'myechart': bar.render_embed(),
+        })
+
+'''
 class ResultsView(generic.DetailView):
     model = Questionnaire
     template_name = 'polls/results.html'
+'''
 
 def vote(request, questionnaire_id):
     questionnaire = get_object_or_404(Questionnaire, pk=questionnaire_id)

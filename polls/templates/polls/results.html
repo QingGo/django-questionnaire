@@ -5,6 +5,7 @@
 <p class="text-muted">问卷详情: {{ questionnaire.detail_info }}</p>
 <small class="text-muted">发布日期: {{ questionnaire.pub_date }}</small>
 <br></br>
+{{ myechart|safe }}
 <ul>
     {% for question in questionnaire.question_set.all %}
         <li>
