@@ -42,7 +42,6 @@ def admin_reorder(context, token):
             if not app_name:
                 app_name = app["name"].lower()
             model_order = [m.lower() for m in order.get(app_name, [])]
-            print(app_name)
             context["app_list"][i]["models"].sort(key=lambda model: 
             	sort(model_order, model["admin_url"].strip("/").split("/")[-1]))
     return ""

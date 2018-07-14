@@ -1,9 +1,16 @@
-<h1>{{ question.question_text }}</h1>
+<h1>{{ questionnaire.questionnaire_name }}</h1>
 
 <ul>
-    {% for choice in question.choice_set.all %}
-        <li> {{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% for question in questionnaire.question_set.all %}
+        <li>
+            <p>{{ forloop.counter }}: {{ question.question_text }}</p>
+        <ul>
+        {% for choice in question.choice_set.all %}
+            <li> {{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% endfor %}
+        </ul>
+        </li>
     {% endfor %}
 </ul>
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<a href="{% url 'polls:detail' questionnaire.id %}">Vote again?</a>

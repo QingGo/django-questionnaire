@@ -1,14 +1,25 @@
 <h1>{{ question.question_text }}</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'polls:vote' question.id %}" method="POST">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-        <label for="choice{{ forloop.counter }}">
-            {{ choice.choice_text }}
-        </label>
+{% if error_message %}
+    {% for k, v in error_message.items %}
+    <p><strong>{{ k }}: {{ v }}</strong></p>
     {% endfor %}
+{% endif %}
+
+<form action="{% url 'polls:vote' questionnaire.id %}" method="POST">
+    {% csrf_token %}
+    {% for question in questionnaire.question_set.all %}
+        <p> {{ forloop.counter }}: {{ question.question_text }}</p>
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="question{{ forloop.parentloop.counter }}" 
+            id="question{{ forloop.parentloop.counter }}-choice{{ forloop.counter }}" value="{{ choice.choice_text }}" />
+            <label for="choice{{ forloop.counter }}">
+                {{ choice.choice_text }}
+            </label>
+        {% endfor %}
+    {% endfor %}
+<br></br>
 <input type="submit" value="Vote" />
 </form>
+
+<a href="{% url 'polls:index'%}">Go back</a>
