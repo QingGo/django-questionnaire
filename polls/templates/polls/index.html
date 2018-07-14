@@ -1,7 +1,7 @@
 {% extends "polls/base_polls.html" %}
 
 {% block bodyindiv %}
-<h2>Questionnaires list</h2>
+<h2>问卷列表</h2>
 {% if latest_questionnaire_list %}
     <ul>
         {% for questionnaire in latest_questionnaire_list %}
@@ -13,8 +13,8 @@
                 </ul>
                 <p>...</p>
                 </br>
-                <p class="text-muted">Questionnaire detail: {{ questionnaire.detail_info }}</p>
-                <small class="text-muted">Publish Date: {{ questionnaire.pub_date }}</small>
+                <p class="text-muted">问卷详情: {{ questionnaire.detail_info }}</p>
+                <small class="text-muted">发布日期: {{ questionnaire.pub_date }}</small>
             </li>
         {% endfor %}
     </ul>

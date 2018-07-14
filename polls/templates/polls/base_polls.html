@@ -5,13 +5,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}" />
-    
 </head>
 {% endblock %}
 
 {% block board %}
 <div class="container">
-  <h1 class="text-primary">Polls App by Django</h1>
+  <h1 class="text-primary">问卷</h1>
 </div>
 {% endblock %}
 
@@ -19,13 +18,10 @@
 <div class="container" style="background-color: rgba(11, 214, 45, 0.555);">
         <ul class="nav nav-pills">
           <li class="nav-item" "active">
-            <a class="nav-link" href={% url 'polls:index' %}>All questionnaires</a>
+            <a class="nav-link" href={% url 'polls:index' %}>所有问卷</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href={% url 'polls:index' %}>Results</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href={% url 'admin:index' %}>Admin page</a>
+            <a class="nav-link" href={% url 'admin:index' %}>管理页面</a>
           </li>
         </ul>
 </div>
