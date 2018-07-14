@@ -1,3 +1,6 @@
+{% extends "polls/base_polls.html" %}
+
+{% block bodyindiv %}
 <h1>{{ questionnaire.questionnaire_name }}</h1>
 
 <ul>
@@ -14,3 +17,4 @@
 </ul>
 
 <a href="{% url 'polls:detail' questionnaire.id %}">Vote again?</a>
+{% endblock %}

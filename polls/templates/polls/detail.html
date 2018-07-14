@@ -1,3 +1,6 @@
+{% extends "polls/base_polls.html" %}
+
+{% block bodyindiv %}
 <h1>{{ question.question_text }}</h1>
 
 {% if error_message %}
@@ -23,3 +26,4 @@
 </form>
 
 <a href="{% url 'polls:index'%}">Go back</a>
+{% endblock %}

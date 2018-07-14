@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+{% block header %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/css/bootstrap.css' %}" />
+</head>
+{% endblock %}
+<div class="container">
+    {% block bodyindiv %}
+    <h1>Questionnaires list </h1>
+    {% if latest_questionnaire_list %}
+        <ul>
+            {% for questionnaire in latest_questionnaire_list %}
+                <li><a href="{% url 'polls:detail' questionnaire.id %}">{{ questionnaire.questionnaire_name }}</a>
+                    <ul>
+                        {% for question in questionnaire.question_set.all %}
+                            <li> {{ question.question_text }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="text-muted">Questionnaire detail: {{ questionnaire.detail_info }}</p>
+                    <small class="text-muted">Publish Date: {{ questionnaire.pub_date }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+    {% endblock %}
+    </div>
+</html>

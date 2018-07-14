@@ -1,6 +1,7 @@
-{% load static %}
+{% extends "polls/base_polls.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+{% block bodyindiv %}
+<h1>Questionnaires list </h1>
 {% if latest_questionnaire_list %}
     <ul>
         {% for questionnaire in latest_questionnaire_list %}
@@ -10,11 +11,12 @@
                         <li> {{ question.question_text }}</li>
                     {% endfor %}
                 </ul>
-                <p>{{ questionnaire.detail_info }}</p>
-                <p>{{ questionnaire.pub_date }}</p>
+                <p class="text-muted">Questionnaire detail: {{ questionnaire.detail_info }}</p>
+                <small class="text-muted">Publish Date: {{ questionnaire.pub_date }}</small>
             </li>
         {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock %}
