@@ -13,16 +13,26 @@ from django.utils import timezone
 
 from collections import OrderedDict
 
-from pyecharts import Bar, Pie
+from pyecharts import Bar, Pie, Line
 
+import pandas
 
+'''
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_questionnaire_list'
 
     def get_queryset(self):
         return Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+'''
+def index(request):
+    latest_questionnaire_list = Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
+    return render(request, 'polls/index.html', {
+        'latest_questionnaire_list': latest_questionnaire_list,
+        'myecharts': {
+        }
+    })
 
 class DetailView(generic.DetailView):
     model = Questionnaire

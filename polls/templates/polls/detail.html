@@ -26,8 +26,15 @@
         </div>
     {% endfor %}
 <br></br>
-<input type="submit" value="提交" />
+<p>
+<input class="btn btn-primary btn-lg " type="submit" value="提交" />
+<a class="btn btn-primary btn-lg " href="{% url 'polls:index'%}">回到问卷列表</a>
+<a class="btn btn-primary btn-lg " href="{% url 'polls:results' questionnaire.id%}">查看投票结果</a>
+</p>
 </form>
 
-<a href="{% url 'polls:index'%}">回到问卷列表</a>
+<br></br>
+
+
+
 {% endblock %}

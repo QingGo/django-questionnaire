@@ -15,7 +15,9 @@
 
 {% block board %}
 <div class="container">
-  <h1 class="text-primary">问卷</h1>
+  <h1 class="page-header">
+    <a href={% url 'polls:index' %} style="text-decoration:none;" >问卷</a>
+  </h1>
 </div>
 {% endblock %}
 
