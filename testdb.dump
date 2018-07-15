@@ -1,0 +1,420 @@
+-- MySQL dump 10.16  Distrib 10.1.30-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: testdb
+-- ------------------------------------------------------
+-- Server version	10.1.30-MariaDB-0ubuntu0.17.10.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add choice',1,'add_choice'),(2,'Can change choice',1,'change_choice'),(3,'Can delete choice',1,'delete_choice'),(4,'Can add question',2,'add_question'),(5,'Can change question',2,'change_question'),(6,'Can delete question',2,'delete_question'),(7,'Can add log entry',3,'add_logentry'),(8,'Can change log entry',3,'change_logentry'),(9,'Can delete log entry',3,'delete_logentry'),(10,'Can add permission',4,'add_permission'),(11,'Can change permission',4,'change_permission'),(12,'Can delete permission',4,'delete_permission'),(13,'Can add group',5,'add_group'),(14,'Can change group',5,'change_group'),(15,'Can delete group',5,'delete_group'),(16,'Can add user',6,'add_user'),(17,'Can change user',6,'change_user'),(18,'Can delete user',6,'delete_user'),(19,'Can add content type',7,'add_contenttype'),(20,'Can change content type',7,'change_contenttype'),(21,'Can delete content type',7,'delete_contenttype'),(22,'Can add session',8,'add_session'),(23,'Can change session',8,'change_session'),(24,'Can delete session',8,'delete_session'),(25,'Can add questionnaire',9,'add_questionnaire'),(26,'Can change questionnaire',9,'change_questionnaire'),(27,'Can delete questionnaire',9,'delete_questionnaire'),(28,'Can add vote record',10,'add_voterecord'),(29,'Can change vote record',10,'change_voterecord'),(30,'Can delete vote record',10,'delete_voterecord');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$100000$jMBbxICTqaTm$HfYSRrBpQdxqMiVQEDw/RekJKJ3UtcGPpFwRQCZz4Q8=','2018-07-13 13:51:54.851802',1,'admin','','','admin@example.com',1,1,'2018-07-13 13:51:44.014034');
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` VALUES (1,'2018-07-13 13:52:34.842793','1','What are you eating?',1,'[{\"added\": {}}, {\"added\": {\"name\": \"choice\", \"object\": \"Air\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"Water\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"Sunshine\"}}]',2,1),(2,'2018-07-13 13:53:19.224333','2','What are you doing?',1,'[{\"added\": {}}, {\"added\": {\"name\": \"choice\", \"object\": \"eat\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"drink\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"nothing\"}}]',2,1),(3,'2018-07-13 16:17:04.686356','1','Do you think it is a good name?',1,'[{\"added\": {}}, {\"added\": {\"name\": \"question\", \"object\": \"How do you do?\"}}, {\"added\": {\"name\": \"question\", \"object\": \"What are you doing?\"}}, {\"added\": {\"name\": \"question\", \"object\": \"Are you serious?\"}}]',9,1),(4,'2018-07-13 16:23:23.147759','1','Do you think it is a good name?',2,'[{\"changed\": {\"fields\": [\"pub_date\"]}}]',9,1),(5,'2018-07-13 16:30:48.425234','3','Are you serious?',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"Yes\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"No\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"So-So\"}}]',2,1),(6,'2018-07-13 16:31:19.425692','2','What are you doing?',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"eat\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"drink\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"nothing\"}}]',2,1),(7,'2018-07-13 16:31:35.902019','1','How do you do?',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"fine\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"bad\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"so-so\"}}]',2,1),(8,'2018-07-14 03:11:20.937514','7','fIne',2,'[{\"changed\": {\"fields\": [\"choice_text\"]}}]',1,1),(9,'2018-07-14 03:11:33.843134','6','NothingG',2,'[{\"changed\": {\"fields\": [\"choice_text\"]}}]',1,1),(10,'2018-07-14 03:11:40.214269','6','NothinG',2,'[{\"changed\": {\"fields\": [\"choice_text\"]}}]',1,1),(11,'2018-07-14 15:51:13.365337','2','个人信息调查',1,'[{\"added\": {}}, {\"added\": {\"name\": \"question\", \"object\": \"\\u4f60\\u7231\\u5403\\u751c\\u7cbd\\u5b50\\uff0c\\u8fd8\\u662f\\u54b8\\u7cbd\\u5b50\\uff1f\"}}, {\"added\": {\"name\": \"question\", \"object\": \"\\u4f60\\u662f\\u5357\\u65b9\\u4eba\\uff0c\\u8fd8\\u662f\\u5317\\u65b9\\u4eba\\uff1f\"}}, {\"added\": {\"name\": \"question\", \"object\": \"\\u8bf7\\u95ee\\u4f60\\u7684\\u6027\\u522b\\u662f\\uff1f\"}}, {\"added\": {\"name\": \"question\", \"object\": \"\\u4f60\\u7684\\u5e74\\u9f84\\u6bb5\\u662f\\uff1f\"}}]',9,1),(12,'2018-07-14 15:52:16.708637','4','你爱吃甜粽子，还是咸粽子？',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"\\u5f53\\u7136\\u662f\\u751c\\u7cbd\\u5b50\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"\\u5f53\\u7136\\u662f\\u54b8\\u7cbd\\u5b50\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"\\u4e24\\u8005\\u90fd\\u559c\\u6b22\\u5403\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"\\u4e24\\u8005\\u90fd\\u4e0d\\u559c\\u6b22\\u5403\"}}]',2,1),(13,'2018-07-14 15:52:29.964557','5','你是南方人，还是北方人？',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"\\u5357\\u65b9\\u4eba\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"\\u5317\\u65b9\\u4eba\"}}]',2,1),(14,'2018-07-14 15:52:50.252264','6','请问你的性别是？',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"\\u7537\\u6027\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"\\u5973\\u6027\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"\\u5176\\u4ed6\"}}]',2,1),(15,'2018-07-14 15:54:43.782513','7','你的年龄段是？',2,'[{\"added\": {\"name\": \"choice\", \"object\": \"14\\u5c81\\u53ca\\u4ee5\\u4e0b\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"14\\u81f318\\u5c81\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"18\\u81f324\\u5c81\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"24\\u81f330\\u5c81\"}}, {\"added\": {\"name\": \"choice\", \"object\": \"30\\u5c81\\u4ee5\\u4e0a\"}}]',2,1),(16,'2018-07-15 04:31:45.079579','6','Nothing',2,'[{\"changed\": {\"fields\": [\"votes\"]}}]',1,1),(17,'2018-07-15 04:32:02.913077','3','So-so',2,'[{\"changed\": {\"fields\": [\"votes\"]}}]',1,1);
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (3,'admin','logentry'),(5,'auth','group'),(4,'auth','permission'),(6,'auth','user'),(7,'contenttypes','contenttype'),(1,'polls','choice'),(2,'polls','question'),(9,'polls','questionnaire'),(10,'polls','voterecord'),(8,'sessions','session');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2018-07-13 13:46:34.533018'),(2,'auth','0001_initial','2018-07-13 13:46:41.920957'),(3,'admin','0001_initial','2018-07-13 13:46:43.297244'),(4,'admin','0002_logentry_remove_auto_add','2018-07-13 13:46:43.362292'),(5,'contenttypes','0002_remove_content_type_name','2018-07-13 13:46:44.052914'),(6,'auth','0002_alter_permission_name_max_length','2018-07-13 13:46:44.581442'),(7,'auth','0003_alter_user_email_max_length','2018-07-13 13:46:45.113301'),(8,'auth','0004_alter_user_username_opts','2018-07-13 13:46:45.171316'),(9,'auth','0005_alter_user_last_login_null','2018-07-13 13:46:45.537654'),(10,'auth','0006_require_contenttypes_0002','2018-07-13 13:46:45.595677'),(11,'auth','0007_alter_validators_add_error_messages','2018-07-13 13:46:45.653427'),(12,'auth','0008_alter_user_username_max_length','2018-07-13 13:46:46.207606'),(13,'auth','0009_alter_user_last_name_max_length','2018-07-13 13:46:46.743904'),(15,'sessions','0001_initial','2018-07-13 13:46:48.570084'),(16,'polls','0001_initial','2018-07-13 16:10:36.796906'),(17,'polls','0002_auto_20180714_0022','2018-07-13 16:22:57.576825'),(18,'polls','0003_auto_20180715_1223','2018-07-15 04:25:30.159351');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('mtr4nezvqvqglv7ypq385fdt8w52ku8q','N2VlNDI2MzY3ZmY3MmUyNWU1ZmE5MDQxYWEzM2ZiMDJhOWEwZWY4Yjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NzYxMWJhY2IxZDM5MGZhZWQ5MWQxNThlYjAyYWQ2Y2I2NDVjNTljIn0=','2018-07-27 13:51:54.902567');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `polls_choice`
+--
+
+DROP TABLE IF EXISTS `polls_choice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_choice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `choice_text` varchar(200) NOT NULL,
+  `votes` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `polls_choice_question_id_c5b4b260_fk_polls_question_id` (`question_id`),
+  CONSTRAINT `polls_choice_question_id_c5b4b260_fk_polls_question_id` FOREIGN KEY (`question_id`) REFERENCES `polls_question` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `polls_choice`
+--
+
+LOCK TABLES `polls_choice` WRITE;
+/*!40000 ALTER TABLE `polls_choice` DISABLE KEYS */;
+INSERT INTO `polls_choice` VALUES (1,'Yes',30,3),(2,'No',31,3),(3,'So-so',40,3),(4,'Eat',36,2),(5,'Drink',29,2),(6,'Nothing',36,2),(7,'Fine',30,1),(8,'Bad',33,1),(9,'So-so',38,1),(10,'当然是甜粽子',30,4),(11,'当然是咸粽子',20,4),(12,'两者都喜欢吃',27,4),(13,'两者都不喜欢吃',26,4),(14,'南方人',53,5),(15,'北方人',50,5),(16,'男性',32,6),(17,'女性',33,6),(18,'其他',38,6),(19,'14岁及以下',18,7),(20,'14至18岁',25,7),(21,'18至24岁',18,7),(22,'24至30岁',19,7),(23,'30岁以上',23,7);
+/*!40000 ALTER TABLE `polls_choice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `polls_question`
+--
+
+DROP TABLE IF EXISTS `polls_question`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_question` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question_text` varchar(200) NOT NULL,
+  `questionnaire_id` int(11) NOT NULL,
+  `question_type` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `polls_question_questionnaire_id_4d151986_fk_polls_que` (`questionnaire_id`),
+  CONSTRAINT `polls_question_questionnaire_id_4d151986_fk_polls_que` FOREIGN KEY (`questionnaire_id`) REFERENCES `polls_questionnaire` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `polls_question`
+--
+
+LOCK TABLES `polls_question` WRITE;
+/*!40000 ALTER TABLE `polls_question` DISABLE KEYS */;
+INSERT INTO `polls_question` VALUES (1,'How do you do?',1,1),(2,'What are you doing?',1,1),(3,'Are you serious?',1,1),(4,'你爱吃甜粽子，还是咸粽子？',2,1),(5,'你是南方人，还是北方人？',2,1),(6,'请问你的性别是？',2,1),(7,'你的年龄段是？',2,1);
+/*!40000 ALTER TABLE `polls_question` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `polls_questionnaire`
+--
+
+DROP TABLE IF EXISTS `polls_questionnaire`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_questionnaire` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `questionnaire_name` varchar(200) NOT NULL,
+  `detail_info` varchar(400) NOT NULL,
+  `pub_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `polls_questionnaire`
+--
+
+LOCK TABLES `polls_questionnaire` WRITE;
+/*!40000 ALTER TABLE `polls_questionnaire` DISABLE KEYS */;
+INSERT INTO `polls_questionnaire` VALUES (1,'Do you think it is a good name?','for test','2018-07-13 16:23:19.000000'),(2,'个人信息调查','党派之争','2018-07-14 15:47:14.000000');
+/*!40000 ALTER TABLE `polls_questionnaire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `polls_voterecord`
+--
+
+DROP TABLE IF EXISTS `polls_voterecord`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `polls_voterecord` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vote_date` datetime(6) NOT NULL,
+  `ip_address` char(39) NOT NULL,
+  `vote_detail` varchar(500) NOT NULL,
+  `questionnaire_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `polls_voterecord_questionnaire_id_9cf92827_fk_polls_que` (`questionnaire_id`),
+  CONSTRAINT `polls_voterecord_questionnaire_id_9cf92827_fk_polls_que` FOREIGN KEY (`questionnaire_id`) REFERENCES `polls_questionnaire` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=401 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `polls_voterecord`
+--
+
+LOCK TABLES `polls_voterecord` WRITE;
+/*!40000 ALTER TABLE `polls_voterecord` DISABLE KEYS */;
+INSERT INTO `polls_voterecord` VALUES (1,'2018-07-14 08:50:58.486144','16:150:167:150','',1),(2,'2018-07-13 09:18:58.567516','191:215:222:25','',1),(3,'2018-07-11 06:55:58.716547','97:34:248:230','',1),(4,'2018-07-14 03:29:58.798859','22:157:57:162','',1),(5,'2018-07-10 02:28:58.840159','198:14:117:245','',1),(6,'2018-07-08 18:34:58.922617','85:254:186:220','',1),(7,'2018-07-01 22:50:58.990879','253:174:21:131','',1),(8,'2018-07-03 23:52:59.071091','47:244:143:128','',1),(9,'2018-07-10 14:17:59.112326','14:233:239:247','',1),(10,'2018-07-11 08:18:59.144947','16:175:228:62','',1),(11,'2018-07-04 18:35:59.219627','172:165:240:3','',1),(12,'2018-07-14 08:56:59.254602','255:249:235:216','',1),(13,'2018-07-05 04:42:59.368048','196:25:34:6','',1),(14,'2018-07-13 21:01:59.401060','108:10:234:115','',1),(15,'2018-07-01 19:12:59.489723','171:164:128:196','',1),(16,'2018-07-05 07:53:59.516843','70:200:130:150','',1),(17,'2018-07-02 11:19:59.593315','131:143:2:222','',1),(18,'2018-07-04 08:14:59.631709','222:105:225:1','',1),(19,'2018-07-02 04:19:59.665081','19:5:208:200','',1),(20,'2018-07-11 04:56:59.698183','125:224:3:159','',1),(21,'2018-07-10 06:05:59.742113','6:232:23:15','',1),(22,'2018-07-04 22:58:59.772447','227:47:143:163','',1),(23,'2018-07-06 01:56:59.847676','78:129:95:85','',1),(24,'2018-07-08 14:54:59.920856','184:2:157:8','',1),(25,'2018-07-05 22:58:59.953992','95:249:193:66','',1),(26,'2018-07-04 07:24:59.992043','186:228:235:219','',1),(27,'2018-07-11 15:03:00.126290','84:202:92:153','',1),(28,'2018-07-11 01:19:00.168303','255:192:144:56','',1),(29,'2018-07-04 07:45:00.201829','205:183:202:129','',1),(30,'2018-07-09 03:09:00.241591','238:170:137:126','',1),(31,'2018-07-12 04:41:00.276027','157:191:202:252','',1),(32,'2018-07-12 11:11:00.308548','182:186:38:201','',1),(33,'2018-07-10 11:40:00.336426','199:155:210:25','',1),(34,'2018-07-15 02:40:00.366931','198:207:124:78','',1),(35,'2018-07-01 23:43:00.399651','156:171:161:43','',1),(36,'2018-07-05 01:21:00.433943','213:164:97:231','',1),(37,'2018-07-04 15:34:00.466211','89:236:28:101','',1),(38,'2018-07-14 16:40:00.539822','254:214:47:163','',1),(39,'2018-07-07 15:15:00.564731','122:105:173:3','',1),(40,'2018-07-14 13:57:00.598198','157:105:101:2','',1),(41,'2018-07-11 07:14:00.630803','52:93:123:165','',1),(42,'2018-07-02 05:48:00.664526','13:16:112:50','',1),(43,'2018-07-10 13:45:00.696770','121:99:241:114','',1),(44,'2018-07-10 06:33:00.730434','65:139:96:39','',1),(45,'2018-07-11 15:34:00.804250','88:6:75:28','',1),(46,'2018-07-03 19:46:00.900613','96:14:246:156','',1),(47,'2018-07-09 06:20:00.969481','204:237:225:220','',1),(48,'2018-07-11 22:34:01.002479','156:56:138:200','',1),(49,'2018-07-03 09:01:01.037418','162:78:41:181','',1),(50,'2018-07-05 16:13:01.078671','27:191:52:76','',1),(51,'2018-07-14 19:36:01.111631','26:187:242:15','',1),(52,'2018-07-10 04:41:01.144658','51:139:209:121','',1),(53,'2018-07-07 07:33:01.178159','113:135:24:247','',1),(54,'2018-07-03 01:38:01.259659','83:232:2:46','',1),(55,'2018-07-13 21:09:01.292716','66:116:202:220','',1),(56,'2018-07-06 01:21:01.326402','141:114:103:65','',1),(57,'2018-07-10 19:50:01.359749','99:90:49:251','',1),(58,'2018-07-10 10:16:01.433370','199:117:35:180','',1),(59,'2018-07-12 01:58:01.466930','214:168:209:91','',1),(60,'2018-07-11 03:48:01.499294','232:238:142:165','',1),(61,'2018-07-04 06:26:01.565941','175:180:185:254','',1),(62,'2018-07-09 14:31:01.606961','162:65:39:207','',1),(63,'2018-07-07 00:17:01.648450','79:149:131:183','',1),(64,'2018-07-13 11:06:01.689804','106:180:51:7','',1),(65,'2018-07-07 04:14:01.731095','57:246:95:204','',1),(66,'2018-07-01 13:48:01.796981','12:246:209:71','',1),(67,'2018-07-02 01:50:01.838336','202:175:240:214','',1),(68,'2018-07-09 12:01:01.879532','154:33:253:139','',1),(69,'2018-07-04 04:01:01.961995','108:239:177:249','',1),(70,'2018-07-09 01:06:01.994935','208:131:134:119','',1),(71,'2018-07-08 20:43:02.028086','185:226:181:128','',1),(72,'2018-07-12 16:07:02.102137','158:72:13:189','',1),(73,'2018-07-01 20:27:02.135381','59:12:25:194','',1),(74,'2018-07-11 18:56:02.168464','56:16:236:191','',1),(75,'2018-07-03 06:04:02.201444','85:238:3:92','',1),(76,'2018-07-04 22:05:02.234516','79:32:122:177','',1),(77,'2018-07-06 16:59:02.267351','63:135:108:180','',1),(78,'2018-07-04 04:31:02.300642','192:46:175:128','',1),(79,'2018-07-08 05:57:02.333688','147:101:16:49','',1),(80,'2018-07-04 09:09:02.366718','97:197:120:94','',1),(81,'2018-07-07 19:48:02.399447','57:166:66:208','',1),(82,'2018-07-06 13:00:02.432803','192:236:201:139','',1),(83,'2018-07-07 07:21:02.465916','10:69:198:55','',1),(84,'2018-07-05 13:35:02.498268','231:189:65:213','',1),(85,'2018-07-12 06:07:02.556633','206:245:204:22','',1),(86,'2018-07-08 09:37:02.589787','59:44:135:51','',1),(87,'2018-07-13 02:41:02.622744','231:146:177:246','',1),(88,'2018-07-02 16:21:02.655798','242:142:52:96','',1),(89,'2018-07-03 02:30:02.732721','224:201:64:25','',1),(90,'2018-07-15 01:47:02.787602','192:50:218:159','',1),(91,'2018-07-06 05:01:02.820857','33:101:227:99','',1),(92,'2018-07-08 15:45:02.853762','30:76:135:147','',1),(93,'2018-07-07 07:49:02.886928','229:173:48:192','',1),(94,'2018-07-13 17:06:02.969480','195:219:230:15','',1),(95,'2018-07-01 17:04:03.002126','130:103:29:52','',1),(96,'2018-07-13 22:33:03.035506','121:141:5:169','',1),(97,'2018-07-11 17:24:03.101532','247:150:199:138','',1),(98,'2018-07-15 12:12:03.134384','95:153:55:89','',1),(99,'2018-07-12 16:53:03.208804','235:205:66:158','',1),(100,'2018-07-13 13:39:03.262976','102:111:144:52','',1),(101,'2018-07-05 12:12:17.156314','179:180:122:190','',1),(102,'2018-07-02 18:26:17.236099','199:125:85:207','',1),(103,'2018-07-03 11:41:17.268906','181:151:13:137','',2),(104,'2018-07-09 14:17:17.334997','177:146:77:152','',2),(105,'2018-07-14 01:57:17.409421','11:50:61:13','',2),(106,'2018-07-11 13:14:17.483560','10:12:30:26','',1),(107,'2018-07-15 01:32:17.516159','142:220:69:167','',2),(108,'2018-07-05 22:31:17.549734','191:78:133:207','',2),(109,'2018-07-07 05:14:17.623862','48:19:31:212','',2),(110,'2018-07-08 00:05:17.656860','140:242:181:242','',1),(111,'2018-07-13 18:21:17.690000','139:28:36:179','',2),(112,'2018-07-12 01:13:17.722989','199:82:128:228','',2),(113,'2018-07-14 14:35:17.755408','104:39:184:217','',2),(114,'2018-07-01 21:37:17.814002','95:239:70:164','',2),(115,'2018-07-11 17:27:17.904428','212:10:140:6','',1),(116,'2018-07-11 00:16:17.937791','144:195:71:40','',1),(117,'2018-07-01 16:14:17.970787','13:189:199:117','',1),(118,'2018-07-10 02:21:18.044900','208:170:175:70','',1),(119,'2018-07-02 16:30:18.078066','24:103:234:196','',1),(120,'2018-07-07 16:34:18.111066','160:163:148:19','',1),(121,'2018-07-09 11:20:18.185291','221:83:227:54','',1),(122,'2018-07-01 17:22:18.218323','51:237:106:58','',2),(123,'2018-07-12 21:38:18.253765','111:109:128:43','',1),(124,'2018-07-14 22:25:18.285883','149:180:255:110','',2),(125,'2018-07-13 14:15:18.318880','149:232:213:46','',2),(126,'2018-07-03 16:36:18.393081','62:72:41:76','',2),(127,'2018-07-15 01:50:18.434423','152:204:240:225','',1),(128,'2018-07-04 17:04:18.475688','65:74:49:149','',1),(129,'2018-07-13 15:43:18.516495','88:41:31:61','',1),(130,'2018-07-07 04:55:18.541805','189:30:7:205','',2),(131,'2018-07-11 16:05:18.583056','167:125:192:48','',1),(132,'2018-07-09 08:43:18.624300','26:255:136:199','',2),(133,'2018-07-11 22:54:18.698569','161:231:48:53','',2),(134,'2018-07-04 23:55:18.731353','48:59:130:168','',1),(135,'2018-07-15 12:23:18.765289','121:31:79:65','',1),(136,'2018-07-11 21:30:18.797773','100:219:119:86','',2),(137,'2018-07-13 15:52:18.830699','174:252:146:178','',1),(138,'2018-07-13 08:10:18.863779','51:230:112:217','',1),(139,'2018-07-04 16:27:18.896574','167:192:237:183','',1),(140,'2018-07-11 15:22:18.929633','248:90:22:200','',2),(141,'2018-07-13 12:31:19.006582','40:65:108:93','',2),(142,'2018-07-02 20:15:19.037200','51:154:243:67','',2),(143,'2018-07-05 09:46:19.070184','91:51:204:70','',1),(144,'2018-07-06 02:14:19.103210','197:91:219:190','',2),(145,'2018-07-06 03:11:19.135924','48:86:207:38','',2),(146,'2018-07-13 17:10:19.169073','112:154:146:93','',2),(147,'2018-07-04 09:49:19.202436','132:77:181:18','',1),(148,'2018-07-06 21:02:19.235312','112:89:173:108','',1),(149,'2018-07-11 06:21:19.276343','103:74:223:208','',2),(150,'2018-07-11 17:04:19.309754','188:156:80:100','',2),(151,'2018-07-02 06:02:19.342789','242:237:45:107','',2),(152,'2018-07-08 02:10:19.375704','146:93:3:185','',1),(153,'2018-07-03 10:41:19.408773','247:165:209:69','',1),(154,'2018-07-09 21:08:19.441886','81:242:7:229','',2),(155,'2018-07-06 18:16:19.474954','159:123:63:46','',1),(156,'2018-07-05 08:57:19.507700','43:218:206:150','',2),(157,'2018-07-15 11:05:19.540922','94:110:36:198','',2),(158,'2018-07-14 01:55:19.574113','76:6:149:46','',1),(159,'2018-07-09 07:57:19.607106','214:208:65:74','',1),(160,'2018-07-05 19:34:19.639869','95:46:133:173','',1),(161,'2018-07-06 06:23:19.673155','136:45:43:34','',2),(162,'2018-07-02 06:30:19.706048','46:175:12:195','',2),(163,'2018-07-08 18:06:19.738939','86:42:111:127','',1),(164,'2018-07-10 11:56:19.771780','77:212:81:146','',2),(165,'2018-07-13 16:47:19.805320','36:25:173:208','',2),(166,'2018-07-08 17:24:19.838231','26:56:100:67','',1),(167,'2018-07-02 00:35:19.871356','220:143:9:117','',1),(168,'2018-07-08 19:14:19.904179','75:73:207:205','',1),(169,'2018-07-12 03:56:19.937093','67:37:124:248','',1),(170,'2018-07-03 18:24:19.970513','112:108:60:176','',1),(171,'2018-07-02 02:27:20.035800','52:50:25:83','',2),(172,'2018-07-07 15:40:20.069204','141:68:230:63','',1),(173,'2018-07-08 06:05:20.102674','205:59:141:19','',1),(174,'2018-07-14 05:49:20.135514','116:139:183:33','',1),(175,'2018-07-12 14:36:20.168977','44:233:63:46','',2),(176,'2018-07-11 03:54:20.201832','198:37:173:148','',2),(177,'2018-07-04 19:44:20.235045','153:165:55:198','',1),(178,'2018-07-14 05:47:20.267707','188:201:11:16','',2),(179,'2018-07-08 16:14:20.300402','224:163:141:35','',1),(180,'2018-07-09 16:02:20.334144','254:202:170:237','',1),(181,'2018-07-08 14:40:20.367015','239:70:215:139','',1),(182,'2018-07-03 17:55:20.400298','190:255:98:19','',1),(183,'2018-07-13 21:32:20.433318','102:49:105:198','',1),(184,'2018-07-02 09:05:20.466099','106:60:2:245','',2),(185,'2018-07-12 06:43:20.499173','251:42:82:88','',2),(186,'2018-07-08 01:50:20.533325','197:55:133:191','',2),(187,'2018-07-12 02:42:20.565499','85:187:200:38','',1),(188,'2018-07-14 06:43:20.598391','204:95:181:208','',1),(189,'2018-07-14 00:54:20.631219','189:254:255:88','',1),(190,'2018-07-11 17:27:20.664653','182:119:177:38','',2),(191,'2018-07-03 19:34:20.697740','81:190:130:132','',2),(192,'2018-07-02 09:58:20.730802','115:253:253:204','',2),(193,'2018-07-13 12:37:20.796984','209:170:188:239','',1),(194,'2018-07-04 10:10:20.850528','109:179:116:154','',1),(195,'2018-07-04 23:09:20.895972','79:231:233:31','',1),(196,'2018-07-10 04:42:20.928934','181:196:167:198','',1),(197,'2018-07-12 23:03:20.961783','11:131:154:163','',1),(198,'2018-07-12 04:45:20.988203','168:7:63:182','',2),(199,'2018-07-05 06:12:21.020774','23:77:177:4','',2),(200,'2018-07-11 15:34:21.054429','238:30:69:71','',1),(201,'2018-07-11 21:24:21.087411','148:8:229:14','',2),(202,'2018-07-12 13:14:21.120439','87:208:98:54','',1),(203,'2018-07-03 07:23:21.194704','157:175:142:251','',2),(204,'2018-07-09 11:16:21.227694','45:162:217:219','',1),(205,'2018-07-13 00:08:21.260152','234:157:192:159','',2),(206,'2018-07-12 23:31:21.293890','129:142:20:10','',2),(207,'2018-07-12 10:47:21.326881','6:249:8:45','',1),(208,'2018-07-12 09:19:21.359908','186:158:69:148','',2),(209,'2018-07-09 17:25:21.392891','115:212:19:218','',2),(210,'2018-07-02 17:26:21.425908','41:102:174:30','',2),(211,'2018-07-02 16:32:21.459098','94:101:11:93','',2),(212,'2018-07-14 06:18:21.492098','200:101:111:229','',2),(213,'2018-07-10 09:29:21.525166','22:196:150:95','',1),(214,'2018-07-05 09:37:21.558361','85:18:139:222','',1),(215,'2018-07-06 18:19:21.591156','83:123:151:25','',1),(216,'2018-07-06 03:03:21.624254','244:210:41:65','',1),(217,'2018-07-02 12:35:21.665592','56:206:200:219','',2),(218,'2018-07-01 15:52:21.698633','164:209:15:8','',1),(219,'2018-07-04 07:06:21.731416','183:135:231:166','',1),(220,'2018-07-03 23:52:21.772892','237:210:11:4','',1),(221,'2018-07-04 10:24:21.825991','41:190:70:145','',2),(222,'2018-07-12 08:02:21.863914','205:149:243:87','',2),(223,'2018-07-14 05:27:21.896902','29:221:49:21','',2),(224,'2018-07-13 04:27:21.930008','243:69:84:149','',1),(225,'2018-07-13 00:56:21.962843','254:104:166:49','',1),(226,'2018-07-04 08:20:22.070350','100:43:136:81','',1),(227,'2018-07-04 13:13:22.103287','88:53:33:103','',1),(228,'2018-07-08 04:55:22.136372','239:51:71:84','',2),(229,'2018-07-03 00:53:22.169143','248:9:253:219','',2),(230,'2018-07-09 04:18:22.202504','134:237:145:35','',1),(231,'2018-07-09 16:32:22.235495','76:203:243:49','',2),(232,'2018-07-14 05:09:22.268648','176:75:142:156','',2),(233,'2018-07-12 12:33:22.301673','160:201:43:83','',2),(234,'2018-07-13 19:42:22.334667','108:49:238:147','',2),(235,'2018-07-11 02:31:22.367648','138:80:6:62','',2),(236,'2018-07-01 14:39:22.458326','14:125:171:55','',2),(237,'2018-07-01 17:09:22.491413','241:96:155:168','',2),(238,'2018-07-02 06:51:22.524127','14:61:57:203','',2),(239,'2018-07-14 22:39:22.557495','48:240:154:79','',2),(240,'2018-07-09 20:37:22.590552','40:74:202:107','',1),(241,'2018-07-04 08:47:22.664795','192:106:87:109','',2),(242,'2018-07-03 13:51:22.730826','234:45:182:6','',2),(243,'2018-07-15 10:51:22.763595','17:253:136:147','',2),(244,'2018-07-04 07:07:22.854751','197:219:62:149','',1),(245,'2018-07-03 23:18:22.887736','215:245:195:133','',1),(246,'2018-07-08 19:24:22.920800','146:210:4:100','',2),(247,'2018-07-11 16:02:22.953861','194:240:141:136','',1),(248,'2018-07-03 21:31:22.986694','139:25:125:32','',1),(249,'2018-07-09 17:34:23.019736','97:134:64:250','',2),(250,'2018-07-13 10:30:23.052987','159:108:242:128','',1),(251,'2018-07-06 13:52:23.086083','85:143:199:252','',1),(252,'2018-07-05 19:51:23.118735','240:197:144:165','',1),(253,'2018-07-09 11:04:23.151895','61:56:126:157','',1),(254,'2018-07-07 20:56:23.185162','165:173:62:145','',2),(255,'2018-07-11 01:19:23.218269','151:7:252:26','',1),(256,'2018-07-05 07:27:23.251354','34:152:55:89','',1),(257,'2018-07-03 12:40:23.284276','72:37:125:226','',2),(258,'2018-07-08 11:38:23.316998','28:143:34:203','',2),(259,'2018-07-12 13:42:23.350175','65:132:129:56','',2),(260,'2018-07-14 13:53:23.383414','171:201:215:165','',1),(261,'2018-07-15 05:54:23.416426','126:35:76:153','',2),(262,'2018-07-06 06:55:23.449520','158:210:201:49','',2),(263,'2018-07-09 17:52:23.482288','136:232:123:207','',1),(264,'2018-07-05 20:00:23.517924','133:186:80:117','',1),(265,'2018-07-04 01:45:23.556905','56:149:148:19','',2),(266,'2018-07-02 23:42:23.598202','155:229:38:96','',2),(267,'2018-07-07 10:12:23.639411','50:11:217:35','',2),(268,'2018-07-11 13:06:23.680718','34:96:16:105','',2),(269,'2018-07-11 21:21:23.721693','70:25:161:196','',1),(270,'2018-07-08 04:34:23.763367','90:159:148:40','',2),(271,'2018-07-02 23:42:23.839120','1:87:215:19','',2),(272,'2018-07-06 01:17:23.872102','187:176:87:109','',2),(273,'2018-07-11 08:47:23.905226','99:230:137:23','',2),(274,'2018-07-07 00:57:23.938294','165:11:29:6','',1),(275,'2018-07-13 02:05:23.971087','254:8:239:223','',1),(276,'2018-07-08 08:06:24.004116','222:211:100:55','',1),(277,'2018-07-11 14:37:24.036749','13:208:185:60','',1),(278,'2018-07-06 10:08:24.062515','43:53:219:198','',1),(279,'2018-07-09 13:13:24.094978','207:232:39:104','',1),(280,'2018-07-08 02:24:24.128291','192:234:13:10','',2),(281,'2018-07-03 16:05:24.169627','1:230:117:66','',2),(282,'2018-07-15 12:11:24.202673','251:7:146:122','',2),(283,'2018-07-11 23:24:24.235480','116:158:175:191','',1),(284,'2018-07-06 03:01:24.268251','29:153:255:247','',1),(285,'2018-07-12 00:08:24.301859','86:216:84:53','',1),(286,'2018-07-06 10:43:24.334871','254:141:208:132','',2),(287,'2018-07-13 09:54:24.367838','108:79:124:51','',1),(288,'2018-07-07 18:37:24.400856','68:52:209:185','',2),(289,'2018-07-13 20:08:24.433995','120:95:170:61','',2),(290,'2018-07-03 21:48:24.467032','94:88:74:54','',2),(291,'2018-07-05 16:41:24.500043','143:211:124:245','',2),(292,'2018-07-08 05:08:24.532606','129:200:178:46','',1),(293,'2018-07-12 02:03:24.566127','21:116:209:125','',2),(294,'2018-07-08 04:39:24.599107','190:21:92:51','',2),(295,'2018-07-04 00:52:24.631905','81:99:28:70','',1),(296,'2018-07-09 05:54:24.665237','113:118:26:80','',1),(297,'2018-07-06 22:04:24.698116','99:147:67:179','',1),(298,'2018-07-02 23:15:24.731259','245:73:99:32','',2),(299,'2018-07-11 00:54:24.797318','56:112:115:204','',2),(300,'2018-07-11 01:08:24.852752','120:15:27:110','',2),(301,'2018-07-03 00:03:24.896351','98:105:177:22','',2),(302,'2018-07-05 06:21:24.929664','92:146:228:161','',2),(303,'2018-07-04 20:18:25.012211','181:222:11:175','',2),(304,'2018-07-08 19:32:25.053278','86:170:48:130','',2),(305,'2018-07-08 08:13:25.086436','233:81:161:74','',2),(306,'2018-07-15 12:24:25.119568','56:160:73:75','',2),(307,'2018-07-02 14:19:25.152632','46:91:112:92','',2),(308,'2018-07-10 03:52:25.185701','229:203:165:169','',1),(309,'2018-07-07 17:54:25.218756','118:100:219:41','',1),(310,'2018-07-12 18:05:25.251801','98:16:183:90','',2),(311,'2018-07-14 23:06:25.284683','131:138:110:44','',1),(312,'2018-07-15 12:05:25.317924','126:133:55:83','',1),(313,'2018-07-08 06:22:25.350968','151:100:3:200','',1),(314,'2018-07-02 10:27:25.383925','52:50:2:152','',1),(315,'2018-07-14 01:12:25.416960','86:208:88:94','',1),(316,'2018-07-02 08:33:25.450070','203:200:147:130','',1),(317,'2018-07-11 11:38:25.483069','242:124:178:185','',2),(318,'2018-07-03 10:15:25.516122','198:68:187:35','',1),(319,'2018-07-02 23:22:25.549141','69:198:222:44','',2),(320,'2018-07-14 11:09:25.582303','248:91:10:168','',2),(321,'2018-07-10 22:36:25.615350','200:198:32:209','',1),(322,'2018-07-04 12:50:25.648323','112:222:128:204','',2),(323,'2018-07-05 05:25:25.681666','106:221:23:156','',2),(324,'2018-07-04 17:35:25.739391','81:118:230:26','',1),(325,'2018-07-04 19:37:25.821943','185:230:174:121','',1),(326,'2018-07-05 14:46:25.881119','131:45:84:142','',2),(327,'2018-07-04 14:06:25.929179','114:150:62:168','',2),(328,'2018-07-11 02:55:25.970496','127:30:156:194','',1),(329,'2018-07-03 13:08:26.011733','248:167:226:253','',2),(330,'2018-07-13 12:47:26.044783','205:235:180:180','',1),(331,'2018-07-04 06:01:26.085429','244:75:15:5','',2),(332,'2018-07-11 07:54:26.118826','116:252:63:163','',1),(333,'2018-07-15 04:21:26.151819','23:169:82:53','',2),(334,'2018-07-10 14:56:26.185179','39:131:96:123','',1),(335,'2018-07-09 19:23:26.218288','1:149:206:80','',1),(336,'2018-07-13 03:30:26.251014','245:97:33:114','',2),(337,'2018-07-03 18:23:26.284120','255:67:86:51','',2),(338,'2018-07-08 13:14:26.317396','3:131:237:225','',2),(339,'2018-07-02 11:16:26.350462','242:215:109:71','',1),(340,'2018-07-05 17:04:26.383505','201:71:150:206','',1),(341,'2018-07-01 17:16:26.416160','155:20:210:138','',2),(342,'2018-07-14 10:05:26.450766','89:239:6:43','',2),(343,'2018-07-03 09:05:26.484044','175:184:160:107','',2),(344,'2018-07-12 03:06:26.516861','190:160:40:75','',2),(345,'2018-07-04 23:43:26.550084','211:216:210:13','',2),(346,'2018-07-10 21:18:26.583113','251:14:109:250','',1),(347,'2018-07-14 21:23:26.616173','59:253:188:31','',1),(348,'2018-07-07 11:30:26.649224','227:212:82:211','',2),(349,'2018-07-04 14:52:26.682108','200:32:190:135','',2),(350,'2018-07-07 16:29:26.715349','177:149:3:163','',1),(351,'2018-07-13 10:49:26.748436','144:111:32:183','',1),(352,'2018-07-12 22:41:26.822617','243:150:80:44','',2),(353,'2018-07-02 23:07:26.872341','53:119:161:178','',2),(354,'2018-07-06 12:54:26.905307','54:173:212:4','',1),(355,'2018-07-08 09:41:27.004196','2:234:50:126','',1),(356,'2018-07-04 16:11:27.037004','249:26:84:163','',1),(357,'2018-07-04 13:10:27.070358','16:159:87:84','',1),(358,'2018-07-10 11:57:27.103122','195:235:242:24','',1),(359,'2018-07-12 02:34:27.136066','209:128:237:102','',1),(360,'2018-07-02 17:07:27.169426','16:224:142:46','',1),(361,'2018-07-09 06:31:27.202528','78:66:186:23','',1),(362,'2018-07-03 08:45:27.235413','52:167:4:189','',2),(363,'2018-07-03 02:24:27.268075','156:217:11:167','',2),(364,'2018-07-11 06:21:27.301680','79:204:228:204','',2),(365,'2018-07-14 00:22:27.334462','170:255:114:205','',2),(366,'2018-07-13 03:20:27.367705','131:201:188:37','',2),(367,'2018-07-12 18:06:27.400708','159:218:129:216','',2),(368,'2018-07-07 21:44:27.433533','201:189:193:90','',2),(369,'2018-07-13 17:14:27.466931','143:35:117:36','',1),(370,'2018-07-05 20:49:27.499858','219:160:246:126','',1),(371,'2018-07-13 14:13:27.532618','33:114:75:27','',2),(372,'2018-07-13 14:10:27.565882','87:102:63:44','',2),(373,'2018-07-05 07:28:27.599011','31:89:221:220','',1),(374,'2018-07-14 07:45:27.632067','226:166:57:2','',2),(375,'2018-07-14 20:55:27.665087','252:182:162:94','',2),(376,'2018-07-06 08:51:27.698020','211:173:141:186','',1),(377,'2018-07-10 22:24:27.731180','147:74:91:163','',2),(378,'2018-07-04 14:20:27.797243','207:186:227:7','',1),(379,'2018-07-06 21:33:27.863072','94:121:222:22','',2),(380,'2018-07-15 04:58:27.911286','139:121:202:25','',1),(381,'2018-07-13 14:40:27.954045','79:69:100:148','',1),(382,'2018-07-08 18:38:27.987126','146:120:16:76','',2),(383,'2018-07-02 08:02:28.019980','100:38:195:155','',1),(384,'2018-07-05 13:33:28.052621','20:136:100:149','',2),(385,'2018-07-02 12:38:28.086025','104:209:115:5','',2),(386,'2018-07-10 10:27:28.119322','234:22:96:123','',2),(387,'2018-07-15 05:34:28.160366','5:1:78:183','',2),(388,'2018-07-05 03:08:28.201927','232:138:25:27','',2),(389,'2018-07-01 17:12:28.243082','86:187:126:147','',2),(390,'2018-07-07 12:56:28.284173','78:8:19:201','',2),(391,'2018-07-07 04:11:28.325831','122:89:173:172','',1),(392,'2018-07-03 04:03:28.367131','154:203:110:101','',2),(393,'2018-07-13 11:16:28.408353','209:115:205:159','',1),(394,'2018-07-10 10:26:28.450665','192:147:49:157','',1),(395,'2018-07-03 21:42:28.556939','103:27:122:223','',1),(396,'2018-07-11 23:36:28.589948','106:161:237:20','',1),(397,'2018-07-14 03:29:28.622958','24:225:198:225','',2),(398,'2018-07-07 12:13:28.656075','112:127:83:230','',1),(399,'2018-07-02 10:38:28.689164','23:61:171:182','',1),(400,'2018-07-03 11:57:28.722188','36:77:247:137','',1);
+/*!40000 ALTER TABLE `polls_voterecord` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-07-16  3:28:51
