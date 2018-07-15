@@ -130,3 +130,5 @@ STATIC_URL = '/static/'
 ADMIN_REORDER = (
     ('polls', ('Questionnaire', 'Question', 'Choice')),
 )
+#https://uwsgi.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
