@@ -65,7 +65,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries':{
-            'admin_reorder': 'polls.templatetags.admin_reorder',
+            'poll_extras': 'polls.templatetags.poll_extras',
             }
         },
     },

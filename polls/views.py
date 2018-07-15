@@ -13,7 +13,7 @@ from django.utils import timezone
 
 from collections import OrderedDict
 
-from pyecharts import Bar
+from pyecharts import Bar, Pie
 
 
 class IndexView(generic.ListView):
@@ -34,18 +34,31 @@ class DetailView(generic.DetailView):
 
 def results(request, questionnaire_id):
     questionnaire = get_object_or_404(Questionnaire, pk=questionnaire_id)
-    x = []
-    y = []
+    pies_for_questions = []
+    total_bar_x = []
+    total_bar_y = []
     for question in questionnaire.question_set.all():
+        pie_x = []
+        pie_y = []
         for choice in question.choice_set.all():
-            x.append(choice.choice_text)
-            y.append(choice.votes)
-    bar=Bar("投票结果总览",width=1000,height=700)
-    bar.add("各选项投票量",x, y, mark_line=["average"], mark_point=["max", "min"])
+            total_bar_x.append(choice.choice_text)
+            total_bar_y.append(choice.votes)
+            pie_x.append(choice.choice_text)
+            pie_y.append(choice.votes)
+        pie = Pie("各选项所占百分比")
+        pie.add("", pie_x, pie_y, radius=[30, 75], is_label_show=True)
+        pies_for_questions.append(pie.render_embed())
+
+    total_bar=Bar("投票结果总览",width=1000,height=700)
+    total_bar.add("各选项投票量",total_bar_x, total_bar_y, mark_line=["average"],
+     mark_point=["max", "min"], xaxis_rotate=30)
 
     return render(request, 'polls/results.html', {
             'questionnaire': questionnaire,
-            'myechart': bar.render_embed(),
+            'myecharts': {
+                "total_bar" : total_bar.render_embed(),
+                "pies_for_questions": pies_for_questions
+            }
         })
 
 '''
