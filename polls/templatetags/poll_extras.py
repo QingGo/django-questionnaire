@@ -7,7 +7,6 @@ register = template.Library()
 
 @register.filter(name='zip')
 def zip_lists(a, b):
-    print(a, b)
     return zip(a, b)
 
 # from http://www.djangosnippets.org/snippets/1937/

@@ -23,6 +23,15 @@ class Questionnaire(models.Model):
 class Question(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
+    question_type_choice = (
+        (1, "radio"),
+        (2, "checkbox"),
+        (3, "text"),
+    )
+    question_type = models.IntegerField(
+        choices=question_type_choice,
+        default=1,
+    )
 
     def __str__(self):
         return self.question_text
@@ -36,3 +45,12 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class VoteRecord(models.Model):
+    vote_date = models.DateTimeField('date voted')
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    ip_address = models.GenericIPAddressField()
+    vote_detail = models.CharField(max_length=500)
+
+    def __str__(self):
+        return "{} by {} in {}".format(self.questionnaire, self.ip_address, self.vote_date)
