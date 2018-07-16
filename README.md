@@ -1,9 +1,15 @@
-#### A questionnaire website app by django
+### A questionnaire website app by django
 
-> To-do list
-* Use Echarts to add figures.
+部署地址:
+http://119.23.222.43:8000/polls/
+
+用到的各类框架包括：
+> Nginx, Uwsgi, Django, Bootstrap, Echarts
+
+### To-do list
+* make the page more beautiful
 * add more polls type.
 * check same ip.
 * use spider to collect polls from other site.
-* Use Bootstrap to beautify site.
+* try docker
 * use vue to spilt frontend and backend.
