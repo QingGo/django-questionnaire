@@ -1,7 +1,7 @@
 ### A questionnaire website app by django
 
 部署地址:
-http://119.23.222.43:8000/polls/
+http://goqing123.com.cn:8000
 
 用到的各类框架包括：
 > Nginx, Uwsgi, Django, Bootstrap, Echarts
