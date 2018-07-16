@@ -1,4 +1,5 @@
 {% extends "polls/base_polls.html" %}
+{% load static %}
 {% load poll_extras %}
 
 {% block bodyindiv %}
@@ -6,6 +7,11 @@
 <p class="text-muted">问卷详情: {{ questionnaire.detail_info }}</p>
 <small class="text-muted">发布日期: {{ questionnaire.pub_date }}</small>
 <br></br>
+{% if debug %}
+<script src="{% static 'polls/js/echarts.js' %}"></script>
+{% else %}
+<script src="{% static 'polls/js/echarts.simple.min.js' %}"></script>
+{% endif %}    
 {{ myecharts.total_bar|safe }}
 
 <ul>
@@ -31,6 +37,6 @@
 </ul>
 
 
-
 <a href="{% url 'polls:detail' questionnaire.id %}">Vote again?</a>
 {% endblock %}
+

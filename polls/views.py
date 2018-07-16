@@ -27,7 +27,6 @@ class IndexView(generic.ListView):
 '''
 def index(request):
     latest_questionnaire_list = Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
-
     return render(request, 'polls/index.html', {
         'latest_questionnaire_list': latest_questionnaire_list,
         'myecharts': {
