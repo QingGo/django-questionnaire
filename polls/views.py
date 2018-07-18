@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.conf import settings
 
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
@@ -15,7 +16,7 @@ from collections import OrderedDict
 
 from pyecharts import Bar, Pie, Line
 
-import pandas
+from django.core.cache import cache
 
 '''
 class IndexView(generic.ListView):
@@ -26,7 +27,17 @@ class IndexView(generic.ListView):
         return Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 '''
 def index(request):
-    latest_questionnaire_list = Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+    #TTFB is significicant down from 200+ms t0 2ms
+    index_cache = cache.get("index_cache")
+    if index_cache:
+        return index_cache
+    else:
+        latest_questionnaire_list = Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        render_index = render(request, 'polls/index.html', {
+        'latest_questionnaire_list': latest_questionnaire_list,
+        'myecharts': {}
+        })
+        cache.set("index_cache", render_index, settings.NEVER_REDIS_TIMEOUT)
     return render(request, 'polls/index.html', {
         'latest_questionnaire_list': latest_questionnaire_list,
         'myecharts': {
