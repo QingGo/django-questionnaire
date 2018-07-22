@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Choice, Question, Questionnaire
+from .models import Choice, Question, Questionnaire, VoteRecord
 
 def capitalize_choice(modeladmin, request, queryset):
     print(modeladmin, request, queryset)
@@ -44,3 +44,4 @@ class QuestionnaireAdmin(admin.ModelAdmin):
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice, ChoiceAdmin)
+admin.site.register(VoteRecord)
