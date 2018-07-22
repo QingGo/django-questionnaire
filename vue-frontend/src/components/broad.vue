@@ -3,7 +3,7 @@
     <div class="container">
         <h1 class="page-header">
             <router-link :to="'/polls'">
-            问卷
+            问卷助手
             </router-link>
         </h1>
     </div>
@@ -17,7 +17,10 @@ export default {
 </script>
 
 <style scoped>
-h1 {
+h1.page-header a {
   text-decoration:none;
+}
+div.broad {
+  margin: 10px;
 }
 </style>

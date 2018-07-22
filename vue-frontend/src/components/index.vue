@@ -1,11 +1,11 @@
 <template>
 <div class="container">
-    <br>
     <div class="index">
         <div v-if="latest_questionnaire_list">
             <ul>
                 <template v-for="questionnaire in latest_questionnaire_list">
-                    <li :key=questionnaire.questionnaire_name>
+                    <div class="questionnaire_block" :key=questionnaire.questionnaire_name>
+                    <li>
                         <h4>
                             <router-link :to="'detail/' + questionnaire.id ">
                             {{ questionnaire.questionnaire_name }}
@@ -26,6 +26,7 @@
                         <br>
                         <br>
                     </li>
+                    </div>
                 </template>
             </ul>
         </div>
@@ -62,3 +63,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+div.questionnaire_block {
+    padding: 16px 30px;
+    margin: 10px;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0px 0px 10px rgba(26,26,26,.3);
+    box-sizing: border-box;
+    display: block;
+    background-color: antiquewhite;
+}
+</style>
