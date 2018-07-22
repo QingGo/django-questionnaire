@@ -18,11 +18,16 @@ from django.urls import path, include
 
 from django.views.generic.base import TemplateView
 
-from . import views
 
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
+    # django tenplates
     path('polls/', include('polls.urls')),
+    # django admin
     path('admin/', admin.site.urls),
+    # pages build by VUE
     path('', TemplateView.as_view(template_name="index.html")),
-    path('api/', include('polls.urls', namespace='api'))
+    # DRF admin
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

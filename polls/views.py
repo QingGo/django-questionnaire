@@ -1,36 +1,46 @@
-from django.http import Http404
+from collections import OrderedDict
+
 from django.conf import settings
 
 from django.shortcuts import render, get_object_or_404
-from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 # Create your views here.
-from .models import Choice, Question, Questionnaire
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
 from django.db.models import F
-
 from django.utils import timezone
-
-from collections import OrderedDict
-
 from pyecharts import Bar, Pie, Line
-
 from django.core.cache import cache
-
 from django.http import JsonResponse
 
+from .serializers import QuestionnaireSerializer
+from .models import Choice, Question, Questionnaire
+
+class QuestionnaireViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Questionnaire.objects.all()
+    serializer_class = QuestionnaireSerializer
+
+
 def questionnaire_api(request):
+    '''
+    latest_questionnaire_list = Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+    questionnaires = {}
+    for questionnaire in latest_questionnaire_list:
+        for question in questionnaire.question_set.all():
+            
+    '''
     questionnaires = {'questionnaire_list': [
                         {'questionnaire_name': 'test12',
                             'detail_info': 'detaildiiiididi',
                             'pub_date': '2018-7-11',
                             'question_set': [{'question_text': '12123'}]},
-                        {'questionnaire_name': 'test123',
-                            'detail_info': 'detaildiidi',
-                            'pub_date': '2018-7-11',
-                            'question_set': [{'question_text': '12123'}]},
                     ]}
+    
     return JsonResponse(questionnaires)
 
 '''

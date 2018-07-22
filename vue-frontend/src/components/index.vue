@@ -11,7 +11,7 @@
                         </h4>
                         <ul>
                             <template v-for="question in questionnaire.question_set">
-                                <li :key=question.question_text> {{ question.question_text }}</li>
+                                <li :key=question.question_text> {{ question }}</li>
                             </template>
                         </ul>
                         <p>...</p>
@@ -42,10 +42,11 @@ export default {
   },
   methods: {
     fetchQuestionnaire: function () {
-      axios.get('http://127.0.0.1:8000/api/questionnaire/')
+      axios.get('http://127.0.0.1:8000/polls/api/questionnaires/')
         .then((response) => {
         // 这里不写成函数式this好像无法正确指向，需弄清楚
-          this.latest_questionnaire_list = response.data.questionnaire_list
+          console.log(response)
+          this.latest_questionnaire_list = response.data
         }, (error) => {
           console.log(error)
         })

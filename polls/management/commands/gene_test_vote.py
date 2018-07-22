@@ -1,10 +1,11 @@
-from django.core.management.base import BaseCommand, CommandError
-from polls.models import Questionnaire, Question, Choice, VoteRecord
-
-from django.utils import timezone
-
 import datetime
 import random
+
+from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
+
+from polls.models import Questionnaire, Question, Choice, VoteRecord
+
 
 def random_votes(random_times, num_vote_types):
     votes_list = [0] * num_vote_types
@@ -13,16 +14,12 @@ def random_votes(random_times, num_vote_types):
     return votes_list
 
 class Command(BaseCommand):
-    help = 'Generate types of data for test'
+    help = 'Generate vote data for test'
 
     def add_arguments(self, parser):
         parser.add_argument('gene_type', type=str)
 
     def handle(self, *args, **options):
-        if options['gene_type'] == "questionnaire":
-            questionnaire = Questionnaire(questionnaire_name="test", pub_date=timezone.now())
-            questionnaire.save()
-            self.stdout.write(self.style.SUCCESS('Successfully generate test questionnaire'))
         if options['gene_type'] == "vote":
             vote_times= 100
             for questionnaire in Questionnaire.objects.all():
