@@ -18,6 +18,21 @@ from pyecharts import Bar, Pie, Line
 
 from django.core.cache import cache
 
+from django.http import JsonResponse
+
+def questionnaire_api(request):
+    questionnaires = {'questionnaire_list': [
+                        {'questionnaire_name': 'test12',
+                            'detail_info': 'detaildiiiididi',
+                            'pub_date': '2018-7-11',
+                            'question_set': [{'question_text': '12123'}]},
+                        {'questionnaire_name': 'test123',
+                            'detail_info': 'detaildiidi',
+                            'pub_date': '2018-7-11',
+                            'question_set': [{'question_text': '12123'}]},
+                    ]}
+    return JsonResponse(questionnaires)
+
 '''
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
