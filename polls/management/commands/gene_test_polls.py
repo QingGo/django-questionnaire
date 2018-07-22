@@ -14,10 +14,13 @@ class Command(BaseCommand):
         parser.add_argument('--gene_num', type=int, default=20)
 
     def handle(self, *args, **options):
+        # delete Questionnaire.objects.filter(id__gt=3).delete()
+        # reset index ALTER TABLE table_name AUTO_INCREMENT = 1;
         gene_time = options['gene_num']
         origin_count = Questionnaire.objects.count()
         for i in range(gene_time):
             polls_orders = origin_count + i + 1
+            print(polls_orders)
             pub_date = timezone.now() - datetime.timedelta(days=(400-i))
             questionnaire = Questionnaire(questionnaire_name="测试问卷{}".format(polls_orders), 
                                         pub_date=pub_date,

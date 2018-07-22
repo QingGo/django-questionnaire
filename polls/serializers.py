@@ -10,4 +10,4 @@ class QuestionnaireSerializer(serializers.HyperlinkedModelSerializer):
     )
     class Meta:
         model = Questionnaire
-        fields = ('questionnaire_name', 'detail_info', 'pub_date', 'question_set')
+        fields = ('id', 'questionnaire_name', 'detail_info', 'pub_date', 'question_set')

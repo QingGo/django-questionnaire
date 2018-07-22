@@ -1,13 +1,15 @@
 <template>
 <div class="container">
+    <br>
     <div class="index">
-        <h2>问卷列表</h2>
         <div v-if="latest_questionnaire_list">
             <ul>
                 <template v-for="questionnaire in latest_questionnaire_list">
                     <li :key=questionnaire.questionnaire_name>
                         <h4>
-                            <a href=#>{{ questionnaire.questionnaire_name }}</a>
+                            <router-link :to="'detail/' + questionnaire.id ">
+                            {{ questionnaire.questionnaire_name }}
+                            </router-link>
                         </h4>
                         <ul>
                             <template v-for="question in questionnaire.question_set">
@@ -15,11 +17,14 @@
                             </template>
                         </ul>
                         <p>...</p>
-                        <br/>
                         <p class="text-muted">问卷详情: {{ questionnaire.detail_info }}</p>
                         <small class="text-muted">发布日期: {{ questionnaire.pub_date }}
-                                <a href=#>直接查看投票结果</a>
+                            <router-link :to="'results/' + questionnaire.id ">
+                            直接查看投票结果
+                            </router-link>
                         </small>
+                        <br>
+                        <br>
                     </li>
                 </template>
             </ul>
