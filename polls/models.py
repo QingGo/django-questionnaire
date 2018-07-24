@@ -7,7 +7,7 @@ from django.utils import timezone
 class Questionnaire(models.Model):
     questionnaire_name = models.CharField(max_length=200)
     detail_info = models.CharField(max_length=400)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', db_index=True)
 
     def __str__(self):
         return self.questionnaire_name
