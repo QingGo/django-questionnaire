@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from pyecharts import Bar, Pie, Line
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import QuestionnaireSerializer
+from .serializers import QuestionnaireSerializer, QuestionnaireDetailSerializer
 from .models import Choice, Question, Questionnaire
 
 
@@ -35,8 +35,8 @@ class QuestionnaireViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, pk=None):
         queryset = Questionnaire.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = QuestionnaireSerializer(user)
+        questionnaire = get_object_or_404(queryset, pk=pk)
+        serializer = QuestionnaireDetailSerializer(questionnaire)
         return Response(serializer.data)
 
 '''
