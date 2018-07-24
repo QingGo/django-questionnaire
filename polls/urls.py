@@ -4,7 +4,7 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'questionnaires', views.QuestionnaireViewSet)
+router.register(r'questionnaires', views.QuestionnaireViewSet, base_name="quertionnaire")
 
 app_name = 'polls'
 urlpatterns = [
@@ -15,5 +15,4 @@ urlpatterns = [
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:questionnaire_id>/results/', views.results, name='results'),
     path('<int:questionnaire_id>/vote/', views.vote, name='vote'),
-    path('questionnaire/', views.questionnaire_api, name='questionnaire_api'),
 ]

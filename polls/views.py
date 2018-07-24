@@ -1,47 +1,43 @@
 from collections import OrderedDict
 
 from django.conf import settings
-
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-# Create your views here.
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
 from django.db.models import F
 from django.utils import timezone
-from pyecharts import Bar, Pie, Line
 from django.core.cache import cache
 from django.http import JsonResponse
-
+from pyecharts import Bar, Pie, Line
+from rest_framework import viewsets
+from rest_framework.response import Response
 from .serializers import QuestionnaireSerializer
 from .models import Choice, Question, Questionnaire
 
-class QuestionnaireViewSet(viewsets.ModelViewSet):
+
+
+class QuestionnaireViewSet(viewsets.ViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Questionnaire.objects.all()
-    serializer_class = QuestionnaireSerializer
+    #queryset = Questionnaire.objects.order_by('-pub_date')
+    #serializer_class = QuestionnaireSerializer
+    def list(self, request):
+        if "start" in request.query_params:
+            start = int(request.query_params["start"]) - 1
+        else:
+            start = 0
+        queryset = Questionnaire.objects.order_by('-pub_date')[start:start+5]
+        serializer = QuestionnaireSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-
-def questionnaire_api(request):
-    '''
-    latest_questionnaire_list = Questionnaire.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
-    questionnaires = {}
-    for questionnaire in latest_questionnaire_list:
-        for question in questionnaire.question_set.all():
-            
-    '''
-    questionnaires = {'questionnaire_list': [
-                        {'questionnaire_name': 'test12',
-                            'detail_info': 'detaildiiiididi',
-                            'pub_date': '2018-7-11',
-                            'question_set': [{'question_text': '12123'}]},
-                    ]}
-    
-    return JsonResponse(questionnaires)
+    def retrieve(self, request, pk=None):
+        queryset = Questionnaire.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = QuestionnaireSerializer(user)
+        return Response(serializer.data)
 
 '''
 class IndexView(generic.ListView):
