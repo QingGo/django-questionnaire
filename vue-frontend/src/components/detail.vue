@@ -24,7 +24,7 @@
         <router-link class="btn btn-primary btn-lg " :to="'/polls'">
             回到问卷列表
         </router-link>
-        <router-link class="btn btn-primary btn-lg " :to="'results/' + questions_list.id ">
+        <router-link class="btn btn-primary btn-lg " :to="'/result/' + questions_list.id ">
             直接查看投票结果
         </router-link>
 
