@@ -20,13 +20,13 @@ class QuestionnaireSerializer(serializers.HyperlinkedModelSerializer):
 class ChoiceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
-        fields = ('choice_text','votes')
+        fields = ('id', 'choice_text','votes')
 
 class QuestionnDetailSerializer(serializers.ModelSerializer):
     choice_set = ChoiceDetailSerializer(many=True, read_only=True)
     class Meta:
         model = Question
-        fields = ('question_text','question_type', 'choice_set')
+        fields = ('id', 'question_text','question_type', 'choice_set')
 
 class QuestionnaireDetailSerializer(serializers.HyperlinkedModelSerializer):
     question_set = QuestionnDetailSerializer(many=True, read_only=True)

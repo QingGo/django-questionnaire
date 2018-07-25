@@ -2,7 +2,9 @@
   <div id="app">
     <myBroad></myBroad>
     <myNavigator></myNavigator>
-    <router-view/>
+    <transition name="slide-left">
+      <router-view/>
+    </transition>
     <ScrollTop></ScrollTop>
     <myFooter></myFooter>
   </div>

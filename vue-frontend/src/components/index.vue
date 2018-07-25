@@ -31,11 +31,12 @@
                 </template>
                 </transition-group>
             </ul>
-            <button @click="loadMore" id="more-info" class="btn btn-primary btn-block">加载更多</button>
-            <div class="container pagination-container">
+            <button v-if="first_loaded" @click="loadMore" id="more-info" class="btn btn-primary btn-block">加载更多</button>
+            <div v-if="all_loaded" class="container pagination-container">
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                 </ul>
             </div>
@@ -54,7 +55,9 @@ export default {
   data: function () {
     return {
       latest_questionnaire_list: [],
-      loaded_num: 0
+      loaded_num: 0,
+      first_loaded: false,
+      all_loaded: false
     }
   },
   methods: {
@@ -64,9 +67,13 @@ export default {
         // 这里不写成函数式this好像无法正确指向，需弄清楚
           this.latest_questionnaire_list = this.latest_questionnaire_list.concat(response.data)
           this.loaded_num += 5
-          console.log('loaded_num: ' + this.loaded_num)
+          this.first_loaded = true
+          if (this.loaded_num > 10) {
+            this.all_loaded = true
+          }
         }, (error) => {
           console.log(error)
+          this.all_loaded = true
         })
     },
     loadMore: function () {

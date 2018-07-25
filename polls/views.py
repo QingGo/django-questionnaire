@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.models import User, Group
@@ -13,15 +13,16 @@ from django.http import JsonResponse
 from pyecharts import Bar, Pie, Line
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from .serializers import QuestionnaireSerializer, QuestionnaireDetailSerializer
 from .models import Choice, Question, Questionnaire
-
 
 
 class QuestionnaireViewSet(viewsets.ViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+    permission_classes = (AllowAny,)
     #queryset = Questionnaire.objects.order_by('-pub_date')
     #serializer_class = QuestionnaireSerializer
     def list(self, request):
@@ -39,6 +40,28 @@ class QuestionnaireViewSet(viewsets.ViewSet):
         serializer = QuestionnaireDetailSerializer(questionnaire)
         return Response(serializer.data)
 
+    def update(self, request, pk=None):
+        questionnaire = get_object_or_404(Questionnaire, pk=pk)
+        selected_choices_list = []
+        for question in request.data["question_set"]:
+            if "picked" in question:
+                try:
+                    question_origin = questionnaire.question_set.get(pk=question["id"])
+                    selected_choices_list.append(question_origin.choice_set.get(pk=question["picked"]))
+                except:
+                    return Response({"error": "question or picked choice not in this questionnaire"}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"error": "any choice has not picked"}, status=status.HTTP_400_BAD_REQUEST)
+        if len(selected_choices_list) != len(set(selected_choices_list)):
+            return Response({"error": "picked choice is repeat"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            for selected_choice in selected_choices_list:
+                selected_choice.votes = F('votes') + 1
+                selected_choice.save()
+        queryset = Questionnaire.objects.all()
+        questionnaire = get_object_or_404(queryset, pk=pk)
+        serializer = QuestionnaireDetailSerializer(questionnaire)
+        return Response(serializer.data)
 '''
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
