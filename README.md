@@ -13,9 +13,7 @@ The web client <-> Nginx <-> the socket <-> uWSGI <-> Django <-> Redis <-> Maria
 
 
 ### To-do list
-* make the page more beautiful
-* try ajax
-* use vue to spilt frontend and backend.
+* 主页需增加搜索栏，内页分页逻辑，已经一个根据问卷发布时间的过滤器
 * add more polls type.
 * check same ip.
 * use spider to collect polls from other site.

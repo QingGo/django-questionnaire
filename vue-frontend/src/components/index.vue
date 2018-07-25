@@ -3,6 +3,7 @@
     <div class="index">
         <div v-if="latest_questionnaire_list">
             <ul>
+                <transition-group name="fade">
                 <template v-for="questionnaire in latest_questionnaire_list">
                     <div class="questionnaire_block" :key=questionnaire.questionnaire_name>
                     <li>
@@ -13,7 +14,7 @@
                         </h4>
                         <ul>
                             <template v-for="question in questionnaire.question_set">
-                                <li :key=question.question_text> {{ question }}</li>
+                                <li :key=question.question_text> {{ question.question_text }}</li>
                             </template>
                         </ul>
                         <p>...</p>
@@ -28,7 +29,16 @@
                     </li>
                     </div>
                 </template>
+                </transition-group>
             </ul>
+            <button @click="loadMore" id="more-info" class="btn btn-primary btn-block">加载更多</button>
+            <div class="container pagination-container">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+            </div>
         </div>
         <div v-else>
             <p>No polls are available.</p>
@@ -43,19 +53,24 @@ export default {
   name: 'index',
   data: function () {
     return {
-      latest_questionnaire_list: []
+      latest_questionnaire_list: [],
+      loaded_num: 0
     }
   },
   methods: {
     fetchQuestionnaire: function () {
-      axios.get('http://127.0.0.1:8000/polls/api/questionnaires/')
+      axios.get('http://127.0.0.1:8000/polls/api/questionnaires/?start=' + (this.loaded_num + 1))
         .then((response) => {
         // 这里不写成函数式this好像无法正确指向，需弄清楚
-          console.log(response)
-          this.latest_questionnaire_list = response.data
+          this.latest_questionnaire_list = this.latest_questionnaire_list.concat(response.data)
+          this.loaded_num += 5
+          console.log('loaded_num: ' + this.loaded_num)
         }, (error) => {
           console.log(error)
         })
+    },
+    loadMore: function () {
+      this.fetchQuestionnaire()
     }
   },
   mounted: function () {
@@ -75,5 +90,9 @@ div.questionnaire_block {
     box-sizing: border-box;
     display: block;
     background-color: antiquewhite;
+}
+div.pagination-container {
+    margin-top: 30px;
+    margin-left: 30px;
 }
 </style>

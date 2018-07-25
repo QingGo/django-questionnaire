@@ -12,3 +12,9 @@ export default {
   name: 'my-footer'
 }
 </script>
+
+<style scoped>
+div.my-footer {
+    margin-top: 20px;
+}
+</style>
