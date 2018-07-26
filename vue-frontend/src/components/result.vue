@@ -40,6 +40,7 @@
 
 <script>
 import axios from 'axios'
+axios.defaults.baseURL = 'http://' + process.env.BASE_URL
 let echarts = require('echarts/lib/echarts')
 require('echarts/lib/chart/pie')
 require('echarts/lib/chart/bar')
@@ -64,7 +65,7 @@ export default {
   },
   methods: {
     fetchQuestions: function () {
-      axios.get('http://127.0.0.1:8000/polls/api/questionnaires/' + (this.$route.params.id))
+      axios.get('/polls/api/questionnaires/' + (this.$route.params.id))
         .then((response) => {
           this.questions_list = response.data
           this.perpareEchartsData()

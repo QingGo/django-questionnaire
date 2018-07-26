@@ -8,9 +8,14 @@
         </router-link>
         </li>
         <li class="nav-item">
-        <router-link :to="'/admin'" class="nav-link">
+        <a :href="'http://'+base_url+'/admin'" class="nav-link" target="_blank">
         管理页面
-        </router-link>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a :href="'http://'+base_url+'/polls/api'" class="nav-link" target="_blank">
+        API一览
+        </a>
         </li>
     </ul>
 </div>
@@ -19,7 +24,12 @@
 
 <script>
 export default {
-  name: 'navigator'
+  name: 'navigator',
+  data: function () {
+    return {
+      base_url: process.env.BASE_URL
+    }
+  }
 }
 </script>
 

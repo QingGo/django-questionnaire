@@ -20,7 +20,7 @@
                         <p>...</p>
                         <p class="text-muted">问卷详情: {{ questionnaire.detail_info }}</p>
                         <small class="text-muted">发布日期: {{ questionnaire.pub_date }}
-                            <router-link :to="'results/' + questionnaire.id ">
+                            <router-link :to="'result/' + questionnaire.id ">
                             直接查看投票结果
                             </router-link>
                         </small>
@@ -50,6 +50,8 @@
 
 <script>
 import axios from 'axios'
+axios.defaults.baseURL = 'http://' + process.env.BASE_URL
+console.log(axios.defaults.baseURL)
 export default {
   name: 'index',
   data: function () {
@@ -62,7 +64,7 @@ export default {
   },
   methods: {
     fetchQuestionnaire: function () {
-      axios.get('http://127.0.0.1:8000/polls/api/questionnaires/?start=' + (this.loaded_num + 1))
+      axios.get('/polls/api/questionnaires/?start=' + (this.loaded_num + 1))
         .then((response) => {
         // 这里不写成函数式this好像无法正确指向，需弄清楚
           this.latest_questionnaire_list = this.latest_questionnaire_list.concat(response.data)
