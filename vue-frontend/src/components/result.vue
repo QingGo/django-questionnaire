@@ -44,8 +44,11 @@ let echarts = require('echarts/lib/echarts')
 require('echarts/lib/chart/pie')
 require('echarts/lib/chart/bar')
 require('echarts/lib/component/tooltip')
+require('echarts/lib/component/toolbox')
 require('echarts/lib/component/title')
 require('echarts/lib/component/legend')
+require('echarts/lib/component/markPoint')
+require('echarts/lib/component/markLine')
 export default {
   name: 'result',
   data: function () {
@@ -53,8 +56,8 @@ export default {
       questions_list: [],
       error_info: false,
       echarts_data: {
-        'hist_data': {x: [], y: []},
-        'pie_data': []},
+        hist_data: {x: [], y: []},
+        pie_data: {data: [], legends: []}},
       myPieChartDivs: []
 
     }
@@ -74,12 +77,15 @@ export default {
       console.log(this.questions_list)
       for (let question of this.questions_list.question_set) {
         let onePieData = []
+        let onePieLegends = []
         for (let choice of question.choice_set) {
           this.echarts_data.hist_data.x.push(choice.choice_text)
           this.echarts_data.hist_data.y.push(choice.votes)
           onePieData.push({value: choice.votes, name: choice.choice_text})
+          onePieLegends.push(choice.choice_text)
         }
-        this.echarts_data.pie_data.push(onePieData)
+        this.echarts_data.pie_data.data.push(onePieData)
+        this.echarts_data.pie_data.legends.push(onePieData)
       }
       console.log(this.echarts_data)
     },
@@ -89,31 +95,99 @@ export default {
         title: {
           text: '投票结果总览'
         },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: '95%',
+          top: 'center',
+          feature: {
+            saveAsImage: {
+              show: true,
+              title: '下载图片'
+            },
+            restore: {
+              show: true
+            },
+            dataView: {
+              show: true
+            }
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          triggerOn: 'mousemove|click',
+          axisPointer: {
+            type: 'line'
+          },
+          textStyle: {
+            fontSize: 14
+          },
+          backgroundColor: 'rgba(50,50,50,0.7)',
+          borderColor: '#333',
+          borderWidth: 0
+        },
         xAxis: {
-          data: this.echarts_data.hist_data.x
+          data: this.echarts_data.hist_data.x,
+          axisLabel: {rotate: 30}
         },
         yAxis: {},
         series: [{
           name: '投票数',
           type: 'bar',
-          data: this.echarts_data.hist_data.y
+          data: this.echarts_data.hist_data.y,
+          markPoint: {
+            data: [
+              {type: 'max', name: '最大值'},
+              {type: 'min', name: '最小值'}
+            ]
+          },
+          markLine: {
+            data: [
+              {type: 'average', name: '平均值'}
+            ]
+          }
         }]
       })
       this.$nextTick(function () {
         this.myPieChartDivs = document.querySelectorAll('div#myPieCharts > div')
         for (let divIndex in this.myPieChartDivs) {
           let myPieCharts = echarts.init(this.myPieChartDivs[divIndex])
-          console.log(this.echarts_data.pie_data[divIndex])
           myPieCharts.setOption({
             title: {
               text: '各选项所占百分比'
             },
+            tooltip: {
+              trigger: 'item',
+              triggerOn: 'mousemove|click',
+              axisPointer: {
+                type: 'line'
+              },
+              textStyle: {
+                fontSize: 14
+              },
+              backgroundColor: 'rgba(50,50,50,0.7)',
+              borderColor: '#333',
+              borderWidth: 0
+            },
+            legend: [
+              {
+                data: this.echarts_data.pie_data.legends[divIndex],
+                selectedMode: 'multiple',
+                show: true,
+                left: 'center',
+                top: 'top',
+                orient: 'horizontal',
+                textStyle: {
+                  fontSize: 12
+                }
+              }
+            ],
             series: [
               {
                 name: '各选项所占百分比',
                 type: 'pie',
-                radius: ['50%', '70%'],
-                data: this.echarts_data.pie_data[divIndex]
+                radius: ['30%', '75%'],
+                data: this.echarts_data.pie_data.data[divIndex]
               }
             ]
           })

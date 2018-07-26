@@ -12,10 +12,9 @@
                 <div class="form-group" :key=question.question_text>
                 <p>{{ question_index + 1 }}. {{ question.question_text }} </p>
                 <template v-for="choice in question.choice_set">
-                    <label class="radio-inline" :key=choice.text>
-                    <input type="radio" :name="'question' + question.id"
-                    :value="choice.id"  v-model="question.picked"/>{{ choice.choice_text }}
-                    </label>
+                    <el-radio v-model="question.picked" :label="choice.id" :key="choice.choice_text">
+                      {{ choice.choice_text }}
+                    </el-radio>
                 </template>
                 </div>
             </template>
