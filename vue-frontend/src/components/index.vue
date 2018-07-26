@@ -24,20 +24,19 @@
                             直接查看投票结果
                             </router-link>
                         </small>
-                        <br>
-                        <br>
                     </li>
                     </div>
                 </template>
                 </transition-group>
             </ul>
-            <button v-if="first_loaded" @click="loadMore" id="more-info" class="btn btn-primary btn-block">加载更多</button>
+            <button v-if="first_loaded && !all_loaded" @click="loadMore" id="more-info" class="btn btn-primary btn-block">加载更多</button>
             <div v-if="all_loaded" class="container pagination-container">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                    <li :class="page-item" @click="changePage(1)"><router-link class="page-link" :to="{ name: 'index', query: { page: '1' }}">&laquo;</router-link></li>
+                    <template v-for="page_index in pages_num">
+                    <li :class="page-item" @click="changePage(page_index)" :key="page_index"><router-link class="page-link" :to="{ name: 'index', query: { page: page_index }}">{{ page_index }}</router-link></li>
+                    </template>
+                    <li :class="page-item" @click="changePage(pages_num)" ><router-link class="page-link" :to="{ name: 'index', query: { page: '2' }}">&raquo;</router-link></li>
                 </ul>
             </div>
         </div>
@@ -51,27 +50,36 @@
 <script>
 import axios from 'axios'
 axios.defaults.baseURL = 'http://' + process.env.BASE_URL
-console.log(axios.defaults.baseURL)
 export default {
   name: 'index',
   data: function () {
     return {
       latest_questionnaire_list: [],
+      pages_num: 0,
       loaded_num: 0,
+      page: 1,
       first_loaded: false,
       all_loaded: false
     }
   },
   methods: {
-    fetchQuestionnaire: function () {
-      axios.get('/polls/api/questionnaires/?start=' + (this.loaded_num + 1))
+    fetchQuestionnaire: function (refresh = false) {
+      axios.get('/polls/api/questionnaires/?start=' + (this.loaded_num + 1) + '&page=' + this.page)
         .then((response) => {
-        // 这里不写成函数式this好像无法正确指向，需弄清楚
-          this.latest_questionnaire_list = this.latest_questionnaire_list.concat(response.data)
-          this.loaded_num += 5
-          this.first_loaded = true
-          if (this.loaded_num > 10) {
-            this.all_loaded = true
+          if (refresh) {
+            this.pages_num = response.data.pages_num
+            console.log(this.pages_num)
+            this.latest_questionnaire_list = response.data.polls
+            this.loaded_num = this.latest_questionnaire_list.length
+            this.first_loaded = true
+            this.all_loaded = false
+          } else {
+            this.latest_questionnaire_list = this.latest_questionnaire_list.concat(response.data.polls)
+            this.loaded_num = this.latest_questionnaire_list.length
+            this.first_loaded = true
+            if (this.loaded_num > 10 || response.data.polls.length === 0) {
+              this.all_loaded = true
+            }
           }
         }, (error) => {
           console.log(error)
@@ -80,10 +88,16 @@ export default {
     },
     loadMore: function () {
       this.fetchQuestionnaire()
+    },
+    changePage: function (page) {
+      console.log('change age: ' + page)
+      this.page = page
+      this.loaded_num = 0
+      this.fetchQuestionnaire({refresh: true})
     }
   },
   mounted: function () {
-    this.fetchQuestionnaire()
+    this.fetchQuestionnaire({refresh: true})
   }
 }
 </script>

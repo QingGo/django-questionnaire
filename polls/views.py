@@ -31,9 +31,12 @@ class QuestionnaireViewSet(viewsets.ViewSet):
             start = int(request.query_params["start"]) - 1
         else:
             start = 0
+        if "page" in request.query_params:
+            start += (int(request.query_params["page"]) - 1) * 15
         queryset = Questionnaire.objects.order_by('-pub_date')[start:start+5]
+        pages_num = Questionnaire.objects.count() // 15 + 1
         serializer = QuestionnaireSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response({"polls":serializer.data, "pages_num": pages_num})
 
     def retrieve(self, request, pk=None):
         queryset = Questionnaire.objects.all()
