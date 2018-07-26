@@ -33,6 +33,7 @@
 
 <script>
 import axios from 'axios'
+axios.defaults.baseURL = 'http://' + process.env.BASE_URL
 export default {
   name: 'detail',
   data: function () {
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     fetchQuestions: function () {
-      axios.get('http://127.0.0.1:8000/polls/api/questionnaires/' + (this.$route.params.id))
+      axios.get('/polls/api/questionnaires/' + (this.$route.params.id))
         .then((response) => {
         // 这里不写成函数式this好像无法正确指向，需弄清楚
           console.log(response.data)
@@ -60,7 +61,7 @@ export default {
       if (this.error_info) {
         console.log('not all selected')
       } else {
-        axios.put('http://127.0.0.1:8000/polls/api/questionnaires/' + (this.$route.params.id) + '/', this.questions_list)
+        axios.put('/polls/api/questionnaires/' + (this.$route.params.id) + '/', this.questions_list)
           .then((response) => {
             this.$router.push({
               name: 'result',

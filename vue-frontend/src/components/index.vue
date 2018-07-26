@@ -63,6 +63,7 @@
 <script>
 import axios from 'axios'
 axios.defaults.baseURL = 'http://' + process.env.BASE_URL
+console.log(axios.defaults.baseURL)
 export default {
   name: 'index',
   data: function () {
