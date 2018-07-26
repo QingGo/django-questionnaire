@@ -104,3 +104,7 @@ venv.bak/
 
 # vue
 node_modules
+
+#qiniu
+qiniu_upload_helper.py
+.qiniu_pythonsdk_hostscache.json
