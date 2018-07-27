@@ -2,8 +2,9 @@
 
 部署地址:
 
-新: http://goqing123.com.cn:8000 Django + Vue，前后端分离, 单页面应用。
-旧: http://goqing123.com.cn:8000/polls 使用Django自带的模版引擎渲染得到页面。
+* 新: http://goqing123.com.cn:8000    Django + Vue，前后端分离, 单页面应用。
+
+* 旧: http://goqing123.com.cn:8000/polls    使用Django自带的模版引擎渲染得到页面。
 
 本项目是一个在线问卷调查的网页APP。用户访问页面时，Nginx将直接处理前端传来的请求，其中静态文件请求将被转发到七牛云的CDN上，而动态请求则通过Uwsgi传递给Django进行处理。接收到动态请求后，Django调用后台数据库MariaDB或缓存数据库Redis提取数据，然后通过Django rest framework提供API接口把数据通过json传回前端，前端再通过各种JavaScript库渲染得到最终呈现给用户的页面。
 
