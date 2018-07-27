@@ -84,4 +84,7 @@ div#questionnaire-info{
     margin-top: 10px;
     margin-bottom: 20px;
 }
+.el-radio{
+    margin: 10px;
+}
 </style>

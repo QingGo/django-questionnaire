@@ -15,11 +15,9 @@
             <p>共有{{ all_polls_num }}条搜索结果包含”{{ search_word }}“。 <a href="#" @click="backMainIndex">查看所有问卷</a></p>
         </div>
         <div v-if="latest_questionnaire_list">
-            <ul>
                 <transition-group name="fade">
                 <template v-for="questionnaire in latest_questionnaire_list">
                     <div class="questionnaire_block" :key=questionnaire.questionnaire_name>
-                    <li>
                         <h4>
                             <router-link :to="'detail/' + questionnaire.id ">
                             {{ questionnaire.questionnaire_name }}
@@ -37,11 +35,9 @@
                             直接查看投票结果
                             </router-link>
                         </small>
-                    </li>
                     </div>
                 </template>
                 </transition-group>
-            </ul>
             <button v-if="first_loaded && !all_loaded" @click="loadMore" id="more-info" class="btn btn-primary btn-block">加载更多</button>
             <div v-if="all_loaded && (pages_num - 1)" class="container pagination-container">
                 <ul class="pagination">
